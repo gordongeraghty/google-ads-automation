@@ -1,28 +1,44 @@
-# Google Ads Automation Requirements
-# Empire Amplify - Melbourne Digital Marketing Agency
+# Empire Amplify - Google Ads Automation
+# Pinned dependencies for reproducible builds
 
 # Core Google Ads SDK
-google-ads>=25.1.0
-
-# Data processing
-pandas>=2.0.0
-numpy>=1.24.0
+google-ads==25.1.0
 
 # Google API clients
-google-api-python-client>=2.100.0
-google-auth>=2.23.0
-google-auth-oauthlib>=1.1.0
-google-auth-httplib2>=0.1.1
+google-api-python-client==2.111.0
+google-auth==2.25.2
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+
+# Data processing
+pandas==2.1.4
+numpy==1.26.2
 
 # Environment management
-python-dotenv>=1.0.0
+python-dotenv==1.0.0
 
-# Reporting
-openpyxl>=3.1.0
-xlsxwriter>=3.1.0
-
-# Scheduling
-schedule>=1.2.0
+# HTTP requests
+requests==2.31.0
 
 # Logging
-loguru>=0.7.0
+loguru==0.7.2
+
+# Reporting
+openpyxl==3.1.2
+xlsxwriter==3.1.9
+
+# Scheduling
+schedule==1.2.1
+
+# Testing
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+
+# Linting (dev)
+flake8==6.1.0
+black==23.12.1
+isort==5.13.2
+
+# Type checking (dev)
+mypy==1.7.1
