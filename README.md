@@ -1,250 +1,329 @@
-# Google Ads Automation
+# Google Ads Campaign Automation
 
-> **Empire Amplify** - Automated Google Ads management for agencies and in-house teams.
-> 
-> **No coding required!** Use our Google Sheets + Apps Script version for easy implementation.
+> **Automatically pause bad campaigns, scale winners, and get alerts — no coding required.**
 
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![Google Ads API](https://img.shields.io/badge/Google%20Ads%20API-v18-green.svg)](https://developers.google.com/google-ads/api/docs/start)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+---
+
+## ⏱️ Setup Time: 15 Minutes | 💻 Difficulty: Easy
+
+This script runs inside your Google Ads account and automatically:
+- ⏸️ **Pauses** campaigns with high CPA (wasting money)
+- ⏸️ **Pauses** campaigns with low CTR (poor performance)
+- 📈 **Increases budgets** for campaigns with high ROAS (winners)
+- 📧 **Emails you** when changes are made
+- 📊 **Logs everything** to Google Sheets
 
 ---
 
 ## 🎯 Who Is This For?
 
-| User Type | Recommended Version | Setup Time |
-|-----------|---------------------|------------|
-| **Google Ads Managers** (non-technical) | Google Sheets + Apps Script | 15 minutes |
-| **Marketing Teams** | Google Sheets + n8n workflows | 30 minutes |
-| **Developers / Agencies** | Python scripts | 1-2 hours |
+| ✅ Perfect For | ❌ Not For |
+|----------------|------------|
+| Google Ads managers who want to save time | Accounts using only Smart Bidding |
+| Agencies managing multiple accounts | Very small accounts (<$500/month) |
+| E-commerce stores with clear ROAS targets | Brand-only campaigns |
+| Lead gen businesses with CPA targets | Accounts with no conversion tracking |
 
 ---
 
-## 🚀 Quick Start (No Coding Required)
+## 📋 What You'll Need
 
-### Option 1: Google Sheets Version (Recommended for Beginners)
+Before starting, make sure you have:
 
-1. **Create a new Google Sheet**
-2. **Go to Extensions → Apps Script**
-3. **Copy/paste the code from** `google-apps-script/GoogleAdsAutomation.gs`
-4. **Save and refresh your sheet**
-5. **Use the new "🎯 Google Ads Automation" menu**
+- [ ] Access to a Google Ads account (Admin or Standard access)
+- [ ] Conversion tracking set up (so we can measure CPA/ROAS)
+- [ ] 15 minutes of time
+- [ ] (Optional) A Google account for Google Sheets logging
 
-That's it! You'll get:
-- ✅ Custom menu in your spreadsheet
-- ✅ One-click campaign reporting
-- ✅ Automated optimization rules
-- ✅ Slack/Email notifications
+---
 
-### Option 2: Python Scripts (For Developers)
+# 🚀 Step-by-Step Setup Guide
 
-```bash
-git clone https://github.com/gordongeraghty/google-ads-automation.git
-cd google-ads-automation
-pip install -r requirements.txt
-cp .env.example .env
-# Edit .env with your credentials
-python list_campaigns.py
+## Step 1: Open Google Ads Scripts
+
+1. Log into your [Google Ads account](https://ads.google.com)
+2. Click the **Tools & Settings** icon (🔧 wrench) in the top menu
+3. Under "Bulk Actions", click **Scripts**
+
+![Step 1](https://i.imgur.com/tools-menu.png)
+
+> 💡 **Can't find Scripts?** You need Admin or Standard access. Ask your account owner for access.
+
+---
+
+## Step 2: Create a New Script
+
+1. Click the big blue **"+"** button
+2. If prompted, click **"Skip tutorial"**
+3. You'll see a code editor with some default text
+
+![Step 2](https://i.imgur.com/new-script.png)
+
+---
+
+## Step 3: Copy the Script
+
+1. Open this file: **[google-ads-scripts/CampaignAutomation.js](google-ads-scripts/CampaignAutomation.js)**
+2. Click the **"Copy raw file"** button (or press Ctrl+A then Ctrl+C)
+3. Go back to Google Ads
+4. **Delete all the default text** in the editor
+5. **Paste** the script (Ctrl+V)
+
+---
+
+## Step 4: Configure Your Settings
+
+Find the **SETTINGS** section near the top (around line 50). Update these values:
+
+### 📧 Email (Optional)
+```javascript
+EMAIL: 'your.email@company.com',
+```
+> Enter your email to receive alerts when changes are made.
+
+### 🎯 Your Automation Rules
+
+| Setting | What It Does | Recommended Value |
+|---------|--------------|-------------------|
+| `PAUSE_CPA_ABOVE` | Pause campaigns costing more than this per conversion | Your target CPA + 30% |
+| `PAUSE_CTR_BELOW` | Pause campaigns with click-through rate below this | 1.0 for Search, 0.3 for Display |
+| `INCREASE_BUDGET_ROAS_ABOVE` | Increase budget when ROAS exceeds this | 3.0 (means 3x return) |
+| `BUDGET_INCREASE_PERCENT` | How much to increase budget | 20 |
+| `MAX_BUDGET` | Never exceed this daily budget | Your max comfortable budget |
+
+### Example Settings by Business Type:
+
+**🛒 E-Commerce (Shopify, WooCommerce)**
+```javascript
+PAUSE_CPA_ABOVE: 35,              // If CPA > $35, pause
+PAUSE_CTR_BELOW: 1.0,             // If CTR < 1%, pause
+INCREASE_BUDGET_ROAS_ABOVE: 3.0,  // If ROAS > 3x, increase budget
+BUDGET_INCREASE_PERCENT: 25,      // Increase by 25%
+MAX_BUDGET: 500,                  // Never exceed $500/day
+```
+
+**📞 Lead Generation (Services, B2B)**
+```javascript
+PAUSE_CPA_ABOVE: 75,              // If cost per lead > $75, pause
+PAUSE_CTR_BELOW: 1.5,             // If CTR < 1.5%, pause
+INCREASE_BUDGET_ROAS_ABOVE: 2.0,  // If ROAS > 2x, increase budget
+BUDGET_INCREASE_PERCENT: 20,      // Increase by 20%
+MAX_BUDGET: 300,                  // Never exceed $300/day
+```
+
+**🏪 Local Business (Dentist, Plumber, etc.)**
+```javascript
+PAUSE_CPA_ABOVE: 50,              // If cost per lead > $50, pause
+PAUSE_CTR_BELOW: 2.0,             // If CTR < 2%, pause
+INCREASE_BUDGET_ROAS_ABOVE: 2.5,  // If ROAS > 2.5x, increase budget
+BUDGET_INCREASE_PERCENT: 15,      // Increase by 15%
+MAX_BUDGET: 200,                  // Never exceed $200/day
 ```
 
 ---
 
-## 📊 Use Cases & Examples
+## Step 5: Authorize the Script
 
-### 🛒 E-Commerce / Shopping Campaigns
+1. Click the **"Preview"** button (blue button at top)
+2. A popup will appear asking for authorization
+3. Click **"Authorize"**
+4. Select your Google account
+5. Click **"Allow"** to grant permissions
 
-**Your situation:** You manage Shopping or Performance Max campaigns for an online store. You need to maximize ROAS while keeping CPA under control.
-
-**Recommended settings:**
-```
-PAUSE_IF_CPA_ABOVE: [Your target CPA × 1.5]
-INCREASE_BUDGET_IF_ROAS_ABOVE: 3.0
-MAX_DAILY_BUDGET: [Your max budget per campaign]
-```
-
-**What happens:**
-- Campaigns with ROAS > 3x automatically get 20% budget increases
-- Campaigns with CPA 50% above target get paused
-- You get daily Slack alerts on top performers
-
-**Example:**
-> "My client sells shoes online. Target CPA is $30. I set PAUSE_IF_CPA_ABOVE to $45. 
-> Any campaign spending $50+ with CPA over $45 gets paused automatically. 
-> Campaigns with ROAS over 3x get more budget. I check results once a day instead of constantly monitoring."
+> 🔒 **Is this safe?** Yes! The script only accesses your Google Ads account. It cannot access other Google services or your personal data.
 
 ---
 
-### 📞 Lead Generation / Service Business
+## Step 6: Test in Preview Mode
 
-**Your situation:** You run Search campaigns for a service business (plumber, lawyer, dentist, etc.). You need to generate leads at a target cost.
+The script starts in **Preview Mode** — it will show you what it WOULD do, but won't make any changes.
 
-**Recommended settings:**
+1. Make sure this line says `true`:
+   ```javascript
+   PREVIEW_MODE: true,
+   ```
+2. Click **"Preview"**
+3. Look at the **Logs** panel at the bottom
+4. Review what actions the script would take
+
+**Example Preview Output:**
 ```
-PAUSE_IF_CPA_ABOVE: [Your max cost per lead]
-PAUSE_IF_CTR_BELOW: 1.0
-INCREASE_BUDGET_IF_ROAS_ABOVE: 2.0
-DAYS_TO_ANALYZE: 14
-```
+═══════════════════════════════════════════════════════════
+   EMPIRE AMPLIFY - GOOGLE ADS AUTOMATION
+═══════════════════════════════════════════════════════════
 
-**What happens:**
-- Campaigns with cost/lead above threshold get paused
-- Low CTR campaigns (poor ad relevance) get flagged
-- High-converting campaigns get more budget
+📋 Settings:
+   • Mode: 🔍 PREVIEW (no changes)
+   • Pause if CPA > $100
+   • Pause if CTR < 1%
+   • Scale if ROAS > 3x
 
-**Example:**
-> "My client is a dentist. A new patient is worth $500. We pay up to $100/lead.
-> I set PAUSE_IF_CPA_ABOVE to $100. Any campaign with CPA over $100 gets paused.
-> We focus budget on campaigns that bring leads under $100."
+📊 Results:
+   • Campaigns analyzed: 8
+   • Actions to take: 2
 
----
+📋 Actions to be taken:
 
-### 🏢 B2B / High-Value Sales
+   ⏸️ PAUSE: Generic Keywords - Broad
+      └─ High CPA: $145.00 (threshold: $100)
 
-**Your situation:** Long sales cycles, high-value deals, fewer conversions. You need to be patient but still optimize.
+   📈 INCREASE_BUDGET: Brand - Exact Match
+      └─ High ROAS: 5.20x (threshold: 3x)
+      └─ Budget: $50.00 → $60.00
 
-**Recommended settings:**
-```
-PAUSE_IF_CPA_ABOVE: 500  # Higher threshold for B2B
-PAUSE_IF_CTR_BELOW: 0.5
-DAYS_TO_ANALYZE: 30  # Longer window for B2B
-MIN_SPEND_FOR_EVALUATION: 200  # Need more data
-```
-
-**What happens:**
-- Uses 30-day windows for better data
-- Higher CPA thresholds (B2B has higher margins)
-- Requires more spend before making decisions
-
-**Example:**
-> "My client sells enterprise software at $50k/deal. A lead is worth $500+.
-> I use 30-day windows and higher thresholds because we need more data.
-> The script only makes changes when there's enough data to be confident."
-
----
-
-### 🏷️ Brand Campaigns
-
-**Your situation:** You run brand campaigns to protect your client's brand terms. Low CPA, high ROAS, but you want to catch any issues.
-
-**Recommended settings:**
-```
-PAUSE_IF_CPA_ABOVE: 20  # Brand should be cheap
-PAUSE_IF_CTR_BELOW: 5.0  # Brand should have high CTR
-ALERT_ON_IMPRESSION_DROP: 20  # Alert if impressions drop 20%
-```
-
-**What happens:**
-- Flags if brand campaign CPA rises (competitor activity?)
-- Alerts on CTR drops (ad issues?)
-- Monitors for impression share changes
-
----
-
-## 📁 Files In This Repository
-
-```
-google-ads-automation/
-├── README.md                    # This file
-├── LICENSE                      # MIT License
-├── requirements.txt             # Python dependencies (pinned)
-├── .env.example                 # Environment variables template
-├── .gitignore                   # Git ignore file
-│
-├── google-apps-script/          # NO-CODE VERSION
-│   └── GoogleAdsAutomation.gs   # Copy this to Google Sheets
-│
-├── google_ads_client.py         # Core API client
-├── list_campaigns.py            # List campaigns with metrics
-├── automation_rules.py          # Automated optimization rules
-│
-├── tests/                       # Unit tests
-│   ├── __init__.py
-│   └── test_automation.py
-│
-└── .github/
-    └── workflows/
-        └── lint.yml             # GitHub Actions for linting
+✅ Preview complete. No changes were made.
 ```
 
 ---
 
-## ⚙️ Configuration via Google Sheets
+## Step 7: Go Live!
 
-All settings are managed in a **CONFIG** sheet (created automatically):
+Once you're happy with the preview:
 
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `CUSTOMER_ID` | - | Your Google Ads Customer ID |
-| `PAUSE_IF_CPA_ABOVE` | 100 | Pause if CPA exceeds this ($) |
-| `PAUSE_IF_CTR_BELOW` | 0.5 | Pause if CTR below this (%) |
-| `INCREASE_BUDGET_IF_ROAS_ABOVE` | 3.0 | Scale budget if ROAS above this |
-| `BUDGET_INCREASE_PERCENT` | 20 | Budget increase amount (%) |
-| `MAX_DAILY_BUDGET` | 500 | Maximum daily budget cap ($) |
-| `SLACK_WEBHOOK_URL` | - | Slack webhook for alerts |
-| `EMAIL_RECIPIENTS` | - | Email addresses for reports |
-| `DAYS_TO_ANALYZE` | 30 | Days of data to analyze |
+1. Change this line to `false`:
+   ```javascript
+   PREVIEW_MODE: false,
+   ```
+2. Click **"Preview"** one more time to confirm
+3. Click **"Run"** to execute the changes
+4. Check the Logs to see "Changes applied"
 
 ---
 
-## 🔔 Notifications
+## Step 8: Schedule Daily Runs
 
-### Slack Integration
-1. Create a Slack webhook at https://api.slack.com/apps
-2. Add the webhook URL to your CONFIG sheet
-3. Get alerts for:
-   - Daily performance summaries
-   - Campaigns paused automatically
-   - Budget increases applied
+Set up the script to run automatically every day:
 
-### Email Reports
-1. Add email addresses to CONFIG (comma-separated)
-2. Get daily/weekly reports automatically
-3. Works with any email address
+1. Click **"Save"** (name it "Campaign Automation")
+2. Close the script editor
+3. Find your script in the Scripts list
+4. Click the **pencil icon** ✏️ next to "Frequency"
+5. Select **"Daily"**
+6. Choose a time (we recommend **6:00 AM**)
+7. Click **"Save"**
 
----
-
-## 🔗 Related Repositories
-
-| Repo | Description | Best For |
-|------|-------------|----------|
-| [google-ads-bid-optimization](../google-ads-bid-optimization) | Automated bid management | Fine-tuning keyword bids |
-| [google-ads-keyword-management](../google-ads-keyword-management) | Keyword & negative management | Search campaigns |
-| [google-ads-quality-control](../google-ads-quality-control) | Naming conventions & QA | Account organization |
-| [google-ads-reporting-analytics](../google-ads-reporting-analytics) | Advanced reporting | Dashboards & analytics |
-| [n8n-google-ads-workflows](../n8n-google-ads-workflows) | n8n workflow templates | Complex automation |
-| [zapier-google-ads-integration](../zapier-google-ads-integration) | Zapier integrations | App connections |
+**🎉 Done! Your automation is now running every day!**
 
 ---
 
-## ❓ FAQ
+## 📊 Optional: Add Google Sheets Logging
 
-**Q: Do I need to know Python?**
-A: No! Use the Google Sheets version - just copy/paste the code.
+Keep a permanent record of all changes:
 
-**Q: Is this safe? Will it break my campaigns?**
-A: Always run in "Preview" mode first. The script shows what it WOULD do before doing it.
+### Create Your Log Sheet
 
-**Q: How often should I run the automation?**
-A: Daily is recommended. Set up a time-based trigger in Apps Script.
+1. Go to [Google Sheets](https://sheets.google.com)
+2. Create a **new blank spreadsheet**
+3. Name it "Google Ads Automation Log"
+4. Copy the URL from your browser's address bar
 
-**Q: Can I customize the rules?**
-A: Yes! All thresholds are in the CONFIG sheet. Change them anytime.
+### Add the URL to Your Script
 
-**Q: Does this work with MCC accounts?**
-A: Yes, just enter the correct Customer ID for each account.
+1. Open your script in Google Ads
+2. Find this line:
+   ```javascript
+   GOOGLE_SHEET_URL: '',
+   ```
+3. Paste your sheet URL:
+   ```javascript
+   GOOGLE_SHEET_URL: 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit',
+   ```
+4. Save and run the script
+5. Check your sheet — you'll see an "Automation Log" tab!
 
 ---
 
-## 📞 Support
+## 🛡️ Safety Features
+
+This script includes multiple safety features:
+
+| Feature | What It Does |
+|---------|--------------|
+| **Preview Mode** | Test without making any changes |
+| **Minimum Spend** | Won't judge campaigns until they have enough data |
+| **Maximum Budget Cap** | Never increases budget beyond your limit |
+| **Campaign Filters** | Optionally only automate certain campaigns |
+| **Email Alerts** | Know exactly what changed |
+| **Google Sheets Log** | Complete audit trail |
+
+---
+
+## ❓ Troubleshooting
+
+### "Authorization required"
+Click "Authorize", sign in, and click "Allow".
+
+### "No campaigns found"
+- Make sure you have active campaigns with impressions
+- Check that conversion tracking is set up
+- Verify the date range has data
+
+### "Changes not applying"
+- Confirm `PREVIEW_MODE` is set to `false`
+- Make sure you have edit access to the account
+- Check the Logs for error messages
+
+### "Script takes too long"
+Large accounts may timeout. Add campaign filters to process fewer campaigns at a time.
+
+### "Email not sending"
+Google Ads scripts can only email the account owner. Make sure you're using your own email.
+
+---
+
+## 🔧 Advanced: Campaign Filters
+
+### Only Automate Search Campaigns
+```javascript
+ONLY_CAMPAIGNS_CONTAINING: 'Search',
+```
+
+### Protect Brand Campaigns
+```javascript
+EXCLUDE_CAMPAIGNS_CONTAINING: 'Brand',
+```
+
+### Only Automate Specific Client
+```javascript
+ONLY_CAMPAIGNS_CONTAINING: 'ClientName',
+```
+
+---
+
+## 📁 Other Files in This Repository
+
+| File | Description | Who It's For |
+|------|-------------|--------------|
+| `google-ads-scripts/CampaignAutomation.js` | Main automation script | Everyone |
+| `google-apps-script/GoogleAdsAutomation.gs` | Google Sheets version | Spreadsheet users |
+| `*.py` | Python scripts | Developers |
+| `tests/` | Unit tests | Developers |
+
+---
+
+## 🔗 Related Automation Scripts
+
+| Script | What It Does |
+|--------|--------------|
+| [Bid Optimization](https://github.com/gordongeraghty/google-ads-bid-optimization) | Automatically adjust keyword bids |
+| [Keyword Management](https://github.com/gordongeraghty/google-ads-keyword-management) | Find new keywords, add negatives |
+| [Quality Control](https://github.com/gordongeraghty/google-ads-quality-control) | Check naming conventions |
+| [Reporting](https://github.com/gordongeraghty/google-ads-reporting-analytics) | Daily performance reports |
+
+---
+
+## 📞 Need Help?
 
 - **Email:** gordon@empireamplify.com.au
-- **Issues:** Open a GitHub issue
+- **Issues:** [Open a GitHub issue](https://github.com/gordongeraghty/google-ads-automation/issues)
 - **Location:** Melbourne, Australia
 
 ---
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) file.
+MIT License - Free to use and modify.
 
 **Empire Amplify** | Melbourne, Australia | 2025
