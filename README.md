@@ -1,34 +1,34 @@
 # Google Ads Automation
 
 > **Empire Amplify** - Automated Google Ads campaign management.
-> 
+>
 > **Choose your path:** No-code setup for marketers OR full API access for developers.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
-## 🎯 Choose Your Setup Method
+## Choose Your Setup Method
 
-| Method | Difficulty | Time | Best For |
-|--------|------------|------|----------|
-| [**Google Ads Scripts**](#-option-1-google-ads-scripts-no-code) | ⭐ Easy | 15 min | Marketers, non-technical users |
-| [**Google Sheets + Apps Script**](#-option-2-google-sheets-version) | ⭐ Easy | 20 min | Users who want spreadsheet control |
-| [**Python API**](#-option-3-python-api-developers) | 🔧 Advanced | 1-2 hours | Developers, custom integrations |
+| Method | Difficulty | Best For |
+|--------|------------|----------|
+| [**Google Ads Scripts**](#option-1-google-ads-scripts-no-code) | Easy | Marketers, non-technical users |
+| [**Google Sheets + Apps Script**](#option-2-google-sheets-version) | Easy | Users who want spreadsheet control |
+| [**Python API**](#option-3-python-api-developers) | Advanced | Developers, custom integrations |
 
 ---
 
-# ⭐ Option 1: Google Ads Scripts (No-Code)
+# Option 1: Google Ads Scripts (No-Code)
 
 **Best for:** Non-technical users who want automation without any coding.
 
 ## What You'll Get
 
-✅ Automatic campaign monitoring  
-✅ Auto-pause underperforming campaigns  
-✅ Auto-increase budgets for winners  
-✅ Email alerts when changes happen  
-✅ Activity log in Google Sheets  
+- Automatic campaign monitoring
+- Auto-pause underperforming campaigns
+- Auto-increase budgets for winners
+- Email alerts when changes happen
+- Activity log in Google Sheets  
 
 ---
 
@@ -36,15 +36,15 @@
 
 ### Step 1: Open Google Ads Scripts
 
-1. Log into your **Google Ads account**
-2. Click **Tools & Settings** (wrench icon in top menu)
-3. Under "Bulk Actions", click **Scripts**
+1. Log into your Google Ads account
+2. Click Tools & Settings (wrench icon in top menu)
+3. Under "Bulk Actions", click Scripts
 
 ---
 
 ### Step 2: Create a New Script
 
-1. Click the big blue **+** button
+1. Click the big blue + button
 2. Delete all the default text in the editor
 3. Name your script: `Campaign Automation`
 
@@ -53,8 +53,8 @@
 ### Step 3: Copy Our Script
 
 1. Open this file: [`google-ads-scripts/CampaignAutomation.js`](google-ads-scripts/CampaignAutomation.js)
-2. Select all and **copy** the entire code
-3. **Paste** into the Google Ads script editor
+2. Select all and copy the entire code
+3. Paste into the Google Ads script editor
 
 ---
 
@@ -90,24 +90,24 @@ var CONFIG = {
 
 ---
 
-### Step 5: Authorize & Test
+### Step 5: Authorise & Test
 
-1. Click **Preview** (blue button)
-2. Click **Authorize** when prompted
-3. Sign in and click **Allow**
-4. Review the logs - you'll see what changes WOULD be made
+1. Click Preview (blue button)
+2. Click Authorise when prompted
+3. Sign in and click Allow
+4. Review the logs - you'll see what changes would be made
 
 ---
 
 ### Step 6: Go Live
 
 1. Change `PREVIEW_MODE: true` to `PREVIEW_MODE: false`
-2. Click **Run** to execute
+2. Click Run to execute
 3. Schedule: Daily at 6:00 AM (recommended)
 
 ---
 
-## 📊 Optional: Google Sheets Logging
+## Optional: Google Sheets Logging
 
 1. Create a new Google Sheet
 2. Copy the URL
@@ -118,7 +118,7 @@ var CONFIG = {
 
 ---
 
-# 📋 Option 2: Google Sheets Version
+# Option 2: Google Sheets Version
 
 For users who prefer managing everything from a spreadsheet.
 
@@ -126,14 +126,14 @@ For users who prefer managing everything from a spreadsheet.
 
 ### Setup:
 1. Create a new Google Sheet
-2. Go to **Extensions → Apps Script**
+2. Go to Extensions → Apps Script
 3. Paste the code from the file above
 4. Save and refresh your sheet
-5. Use the new **"🎯 Google Ads Automation"** menu
+5. Use the new "Google Ads Automation" menu
 
 ---
 
-# 🔧 Option 3: Python API (Developers)
+# Option 3: Python API (Developers)
 
 **Best for:** Developers who need custom integrations, multi-account management, or connections to other APIs.
 
@@ -414,7 +414,7 @@ google-ads-automation/
 
 | Issue | Solution |
 |-------|----------|
-| "Authorization required" | Click Authorize, sign in, Allow |
+| "Authorisation required" | Click Authorise, sign in, Allow |
 | "No campaigns found" | Check filters, ensure campaigns are active |
 | "Changes not applying" | Set `PREVIEW_MODE: false` |
 
@@ -440,16 +440,16 @@ google-ads-automation/
 
 ---
 
-## 📞 Need Help?
+## Need Help?
 
-- **Email:** gordon@empireamplify.com.au
-- **Issues:** Open a GitHub issue
-- **API Docs:** [Google Ads API Documentation](https://developers.google.com/google-ads/api/docs/start)
+- Email: gordon@empireamplify.com.au
+- Issues: Open a GitHub issue
+- API Docs: [Google Ads API Documentation](https://developers.google.com/google-ads/api/docs/start)
 
 ---
 
-## 📄 License
+## Licence
 
-MIT License - Free to use and modify.
+MIT Licence - Free to use and modify.
 
 **Empire Amplify** | Melbourne, Australia | 2025
