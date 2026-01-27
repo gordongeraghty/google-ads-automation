@@ -10,7 +10,7 @@
 
 ## Choose Your Setup Method
 
-| Method | Difficulty | Best For |
+| Method | Difficulty | Suitable For |
 |--------|------------|----------|
 | [**Google Ads Scripts**](#option-1-google-ads-scripts-no-code) | Easy | Marketers, non-technical users |
 | [**Google Sheets + Apps Script**](#option-2-google-sheets-version) | Easy | Users who want spreadsheet control |
@@ -20,13 +20,13 @@
 
 # Option 1: Google Ads Scripts (No-Code)
 
-**Best for:** Non-technical users who want automation without any coding.
+**Suitable for:** Non-technical users who want automation without any coding.
 
 ## What You'll Get
 
 - Automatic campaign monitoring
 - Auto-pause underperforming campaigns
-- Auto-increase budgets for winners
+- Auto-increase budgets for high performers
 - Email alerts when changes happen
 - Activity log in Google Sheets  
 
@@ -135,7 +135,7 @@ For users who prefer managing everything from a spreadsheet.
 
 # Option 3: Python API (Developers)
 
-**Best for:** Developers who need custom integrations, multi-account management, or connections to other APIs.
+**Suitable for:** Developers who need custom integrations, multi-account management, or connections to other APIs.
 
 ## Features
 
